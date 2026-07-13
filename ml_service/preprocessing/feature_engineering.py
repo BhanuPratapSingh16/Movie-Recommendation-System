@@ -1,5 +1,7 @@
 from pathlib import Path
 import pandas as pd
+from sklearn.metrics.pairwise import cosine_similarity
+import pickle
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 PROCESSED_DATA_DIR = BASE_DIR / "dataset" / "processed"
@@ -48,3 +50,31 @@ def build_popularity_table(minimum_votes=50):
     movie_stats = movie_stats.merge(movies_df[["movie_id", "title"]], on = "movie_id")
 
     return movie_stats
+
+
+
+def build_similarity_matrix():
+    '''
+        Computes the cosine similarity score of the movies
+    '''
+
+    # Load the data
+    _, movies_df = load_data()
+
+    genres = ["unknown", "Action", "Adventure", "Animation",
+            "Children", "Comedy", "Crime", "Documentary", "Drama",
+            "Fantasy", "Film-Noir", "Horror", "Musical", "Mystery",
+            "Romance", "Sci-Fi", "Thriller", "War", "Western"
+            ]
+    
+    movie_features = movies_df[genres]
+
+    similarity = cosine_similarity(movie_features)
+
+    similarity_df = pd.DataFrame(
+        similarity,
+        index = movies_df["movie_id"],
+        columns = movies_df["movie_id"]
+    )
+
+    similarity_df.to_pickle(PROCESSED_DATA_DIR / "cosine_similarity.pkl")
