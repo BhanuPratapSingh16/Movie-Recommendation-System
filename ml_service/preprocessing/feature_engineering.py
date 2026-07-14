@@ -78,3 +78,16 @@ def build_similarity_matrix():
     )
 
     similarity_df.to_pickle(PROCESSED_DATA_DIR / "cosine_similarity.pkl")
+
+
+def build_user_item_matrix():
+    '''
+        Builds the user ratings matrix
+    '''
+    df = pd.read_csv(PROCESSED_DATA_DIR / "ratings.csv")
+    user_item_matrix = df.pivot(
+        index="user_id",
+        columns="movie_id",
+        values="rating"
+    )
+    
