@@ -2,12 +2,12 @@
 dataset/
 
 # Python
-ml-service/.venv/
-ml-service/__pycache__/
-ml-service/.ipynb_checkpoints/
+ml_service/.venv/
+ml_service/__pycache__/
+ml_service/.ipynb_checkpoints/
 
 # Models
-ml-service/saved_models/
+ml_service/saved_models/
 
 # React
 frontend/node_modules/

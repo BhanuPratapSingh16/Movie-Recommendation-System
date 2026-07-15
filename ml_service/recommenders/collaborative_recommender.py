@@ -7,6 +7,7 @@ from sklearn.model_selection import train_test_split
 # Global variables
 BASE_DIR = Path(__file__).resolve().parents[2]
 PROCESSED_DATA_DIR = BASE_DIR / "dataset" / "processed"
+MODEL_DIR = BASE_DIR / "ml_service" / "saved_models"
 
 # Load the dataframe and split into training and testing set
 data_df = pd.read_csv(PROCESSED_DATA_DIR / "ratings.csv").drop(columns=["timestamp"])
@@ -15,7 +16,6 @@ train_df, test_df = train_test_split(data_df, test_size=0.2, random_state=42)
 # Convert to numpy array for faster calculations
 train_data = train_df.to_numpy()
 test_data = test_df.to_numpy()
-
 
 
 class CollaborativeRecommender:
@@ -71,13 +71,14 @@ class CollaborativeRecommender:
         prediction = np.clip(prediction, 0, 5)
         
         return prediction
-
+    
     def recommend(self, top_n=10):
         pass
 
-    def save_state(self, path):
-        pass
+    def save_state(self):
+        np.save(MODEL_DIR / "Collaborative_P.npy", self.P)
+        np.save(MODEL_DIR / "Collaborative_Q.npy", self.Q)
 
-    def load_state(self, path):
-        pass
-
+    def load_state(self):
+        self.P = np.load(MODEL_DIR / "Collaborative_P.npy")
+        self.Q = np.load(MODEL_DIR / "Collaborative_Q.npy")
