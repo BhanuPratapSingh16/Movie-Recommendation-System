@@ -1,7 +1,6 @@
 from pathlib import Path
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
-import pickle
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 PROCESSED_DATA_DIR = BASE_DIR / "dataset" / "processed"

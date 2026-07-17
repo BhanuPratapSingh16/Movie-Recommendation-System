@@ -3,6 +3,9 @@ dataset/
 
 # Python
 ml_service/.venv/
+ml_service/services/__pycache__
+ml_service/recommenders/__pycache__
+ml_service/preprocessing/__pycache__
 ml_service/__pycache__/
 ml_service/.ipynb_checkpoints/
 
