@@ -7,8 +7,7 @@ ml_service/services/__pycache__
 ml_service/recommenders/__pycache__
 ml_service/preprocessing/__pycache__
 ml_service/utils/__pycache__
-ml_service/__pycache__/
-ml_service/.ipynb_checkpoints/
+ml_service/api/__pycache__
 
 # Models
 ml_service/saved_models/

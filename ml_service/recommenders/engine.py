@@ -11,7 +11,6 @@ from ml_service.preprocessing.feature_engineering import build_popularity_table
 # Global variables
 BASE_DIR = Path(__file__).resolve().parents[2]
 PROCESSED_DATA_DIR = BASE_DIR / "dataset" / "processed"
-MOVIES_DF = pd.read_csv(PROCESSED_DATA_DIR / "movies.csv")
 POPULARITY_TABLE = build_popularity_table()
 SIMILARITY_MATRIX = pd.read_pickle(PROCESSED_DATA_DIR / "cosine_similarity.pkl")
 

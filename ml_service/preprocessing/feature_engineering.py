@@ -51,7 +51,6 @@ def build_popularity_table(minimum_votes=50):
     return movie_stats
 
 
-
 def build_similarity_matrix():
     '''
         Computes the cosine similarity score of the movies
