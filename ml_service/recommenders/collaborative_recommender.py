@@ -83,7 +83,7 @@ class CollaborativeRecommender:
         self.P = np.load(MODEL_DIR / "Collaborative_P.npy")
         self.Q = np.load(MODEL_DIR / "Collaborative_Q.npy")
 
-    def recommend(self, user_id, watch_history, top_n=10):
+    def recommend(self, user_id, watch_history, top_n=100):
         self.load_state()
         movie_ids = [x[0] for x in watch_history]
         

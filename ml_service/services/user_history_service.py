@@ -12,4 +12,4 @@ def get_user_history(user_id):
     '''
     if(user_id > 943):
         return []
-    return data_df[data_df["user_id"] == user_id][["movie_id", "rating"]].values.tolist()
+    return data_df[data_df["user_id"] == user_id][["movie_id", "rating"]].sort_values("rating", ascending=False).values.tolist()

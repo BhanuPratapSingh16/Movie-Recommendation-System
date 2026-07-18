@@ -8,11 +8,11 @@ class ContentBasedRecommender:
     def __init__(self, similarity_df):
         self.similarity_df = similarity_df
 
-    def recommendByMovie(self, movie_id, top_n=10):
+    def recommendByMovie(self, movie_id, top_n=50):
         scores = self.similarity_df.loc[movie_id].sort_values(ascending=False).head(top_n+1)
         return scores[1:]
 
-    def recommend(self, watched_movies, top_n=10):
+    def recommend(self, watched_movies, top_n=100):
         # Store movies and their scores
         movie_scores = {}
         watched_movie_ids = set([movie[0] for movie in watched_movies])
