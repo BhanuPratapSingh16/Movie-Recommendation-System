@@ -2,14 +2,9 @@
 dataset/
 
 # Python
-ml_service/.venv/
-ml_service/services/__pycache__
-ml_service/recommenders/__pycache__
-ml_service/preprocessing/__pycache__
-ml_service/utils/__pycache__
-ml_service/api/__pycache__
-
-# Models
+__pycache__/
+*.py[cod]
+.venv/
 ml_service/saved_models/
 
 # React
@@ -17,11 +12,21 @@ frontend/node_modules/
 frontend/dist/
 
 # Spring Boot
-backend/target/
+backend/movie-service/target/
 
-# IDE
+# IntelliJ
 .idea/
+*.iml
+
+# VS Code
 .vscode/
+
+# Eclipse / STS
+.project
+.classpath
+.settings/
+.springBeans
+.sts4-cache/
 
 # OS
 .DS_Store
