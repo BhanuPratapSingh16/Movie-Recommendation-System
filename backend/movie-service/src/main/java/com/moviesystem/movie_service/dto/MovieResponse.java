@@ -1,19 +1,15 @@
-package com.moviesystem.movie_service.model;
+package com.moviesystem.movie_service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collection = "movies")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Movie {
-    @Id
+public class MovieResponse {
     private Integer id;
     private String title;
     private List<String> genres;
