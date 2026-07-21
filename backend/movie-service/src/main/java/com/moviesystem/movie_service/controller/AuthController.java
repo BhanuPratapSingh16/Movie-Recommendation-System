@@ -1,10 +1,7 @@
 package com.moviesystem.movie_service.controller;
 
 
-import com.moviesystem.movie_service.dto.LoginRequest;
-import com.moviesystem.movie_service.dto.LoginResponse;
-import com.moviesystem.movie_service.dto.RegisterRequest;
-import com.moviesystem.movie_service.dto.RegisterResponse;
+import com.moviesystem.movie_service.dto.*;
 import com.moviesystem.movie_service.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,5 +25,10 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request){
         return ResponseEntity.status(HttpStatus.OK).body(authService.login(request));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<RefreshTokenResponse> refresh(@RequestBody RefreshTokenRequest request){
+        return ResponseEntity.status(HttpStatus.OK).body(authService.refreshToken(request));
     }
 }

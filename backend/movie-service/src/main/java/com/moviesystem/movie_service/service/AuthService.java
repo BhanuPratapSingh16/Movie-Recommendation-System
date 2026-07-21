@@ -1,18 +1,15 @@
 package com.moviesystem.movie_service.service;
 
-import com.moviesystem.movie_service.dto.LoginRequest;
-import com.moviesystem.movie_service.dto.LoginResponse;
-import com.moviesystem.movie_service.dto.RegisterRequest;
-import com.moviesystem.movie_service.dto.RegisterResponse;
+import com.moviesystem.movie_service.dto.*;
 import com.moviesystem.movie_service.model.User;
 import com.moviesystem.movie_service.repository.UserRepository;
 import com.moviesystem.movie_service.security.CustomUserDetails;
+import com.moviesystem.movie_service.security.CustomUserDetailsService;
 import com.moviesystem.movie_service.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,6 +21,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final CustomUserDetailsService userDetailsService;
 
     public RegisterResponse register(RegisterRequest request){
         if(userRepository.existsByEmail((request.getEmail()))){
@@ -50,13 +48,32 @@ public class AuthService {
                     request.getPassword()
                 )
         );
+
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        String token = jwtService.generateToken(userDetails);
+        String accessToken = jwtService.generateAccessToken(userDetails);
+        String refreshToken = jwtService.generateRefreshToken(userDetails);
+
         LoginResponse response = new LoginResponse();
         response.setId(user.getId());
         response.setName(user.getName());
         response.setEmail(user.getEmail());
-        response.setToken(token);
+        response.setAccessToken(accessToken);
+        response.setRefreshToken(refreshToken);
+        return response;
+    }
+
+    public RefreshTokenResponse refreshToken(RefreshTokenRequest request){
+        String refreshToken = request.getRefreshToken();
+
+        String userId = jwtService.extractUserId(refreshToken);
+
+        CustomUserDetails userDetails = userDetailsService.loadUserById(userId);
+
+        if(!jwtService.isRefresTokenValid(refreshToken, userDetails)){
+            throw new RuntimeException("Refresh token invalid!");
+        }
+        RefreshTokenResponse response = new RefreshTokenResponse();
+        response.setAccessToken(jwtService.generateAccessToken(userDetails));
         return response;
     }
 }

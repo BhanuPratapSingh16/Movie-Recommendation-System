@@ -19,11 +19,26 @@ public class JwtService {
         this.secretKey = secretKey;
     }
 
-    public String generateToken(CustomUserDetails userDetails){
+    public String generateAccessToken(CustomUserDetails userDetails){
+        long now = System.currentTimeMillis();
+
         return Jwts.builder()
                 .subject(userDetails.getId())
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+                .claim("type", "access")
+                .issuedAt(new Date(now))
+                .expiration(new Date(now + 1000 * 60 * 60 * 24))
+                .signWith(getSigningKey())
+                .compact();
+    }
+
+    public String generateRefreshToken(CustomUserDetails userDetails) {
+        long now = System.currentTimeMillis();
+
+        return Jwts.builder()
+                .subject(userDetails.getId())
+                .claim("type", "refresh")
+                .issuedAt(new Date(now))
+                .expiration(new Date(now + 1000L * 60 * 60 * 24 * 7))
                 .signWith(getSigningKey())
                 .compact();
     }
@@ -32,9 +47,20 @@ public class JwtService {
         return extractAllClaims(token).getSubject();
     }
 
-    public boolean isTokenValid(String token, CustomUserDetails userDetails) {
+    public boolean isAccessTokenValid(String token, CustomUserDetails userDetails) {
         String userId = extractUserId(token);
-        return userId.equals(userDetails.getId()) && !isTokenExpired(token);
+        String tokenType = extractTokenType(token);
+        return userId.equals(userDetails.getId()) && tokenType.equals("access") && !isTokenExpired(token);
+    }
+
+    public boolean isRefresTokenValid(String token, CustomUserDetails userDetails) {
+        String userId = extractUserId(token);
+        String tokenType = extractTokenType(token);
+        return userId.equals(userDetails.getId()) && tokenType.equals("refresh") && !isTokenExpired(token);
+    }
+
+    public String extractTokenType(String token){
+        return extractAllClaims(token).get("type", String.class);
     }
 
     private SecretKey getSigningKey() {
