@@ -19,7 +19,7 @@ class HybridRecommender:
         self.content_recommender = content_recommender
         self.collaborative_recommender = collaborative_recommender
     
-    def recommend(self, user_id, watch_history, top_n=10):
+    def recommend(self, watch_history, top_n=10):
         num_watched_movies = len(watch_history)
 
         # Get popularity recommendation and normalize the score

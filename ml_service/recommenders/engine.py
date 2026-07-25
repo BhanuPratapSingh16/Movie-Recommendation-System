@@ -21,12 +21,11 @@ class RecommendationEngine:
         self.collaborative_recommender = CollaborativeRecommender(943, 1682)
         self.hybrid_recommender = HybridRecommender(self.popularity_recommender, self.content_recommender, self.collaborative_recommender)
     
-    def recommend(self, user_id):
+    def recommend(self, watch_history):
         # Get user watch history
-        watch_history = get_user_history(user_id=user_id)
 
         # Generate the recommendations
-        recommendation =  self.hybrid_recommender.recommend(user_id, watch_history)
+        recommendation =  self.hybrid_recommender.recommend(watch_history)
 
         # Format and return the recommendations
         return recommendation
