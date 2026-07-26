@@ -2,6 +2,7 @@ import pandas as pd
 from pathlib import Path
 from fastapi import FastAPI
 from ml_service.recommenders.engine import RecommendationEngine
+from ml_service.app.schemas import RecommendationRequest
 
 # Data directory
 BASE_DIR = Path(__file__).resolve().parents[2]
@@ -19,9 +20,13 @@ def home():
     return {"message" : "Movie Recommendation API"}
 
 
-@app.get("/recommend/{user_id}")
-def recommend(user_id):
-    recoms = recommender.recommend(int(user_id))
+@app.post("/recommend")
+def recommend(request: RecommendationRequest):
+    watch_history = [
+        (rating.movie_id, rating.rating) for rating in request.ratings
+    ]
+    recoms = recommender.recommend(watch_history)
+
     recommendations = []
 
     for movie_id, score in recoms.items():

@@ -10,5 +10,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RecommendationResponse {
-    private List<RecommendationItem> recommendationItems;
+    private List<RecommendationItem> recommendations;
 }

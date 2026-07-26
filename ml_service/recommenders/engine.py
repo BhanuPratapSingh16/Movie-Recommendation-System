@@ -1,6 +1,5 @@
 from pathlib import Path
 import pandas as pd
-from ml_service.services.user_history_service import get_user_history
 from ml_service.recommenders.popularity_recommender import PopularityRecommender
 from ml_service.recommenders.content_based_recommender import ContentBasedRecommender
 from ml_service.recommenders.collaborative_recommender import CollaborativeRecommender

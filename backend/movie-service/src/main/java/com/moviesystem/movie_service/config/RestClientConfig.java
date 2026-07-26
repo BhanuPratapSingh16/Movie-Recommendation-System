@@ -9,6 +9,6 @@ import org.springframework.web.client.RestClient;
 public class RestClientConfig {
     @Bean
     public RestClient aiRestClient(){
-        return RestClient.builder().baseUrl("https://localhost:8080").build();
+        return RestClient.builder().baseUrl("http://localhost:8000").build();
     }
 }

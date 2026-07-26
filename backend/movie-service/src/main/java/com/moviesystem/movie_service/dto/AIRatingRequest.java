@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class AIRatingRequest {
     @JsonProperty("movie_id")
     private Integer movieId;
-    private Double rating;
+    private Integer rating;
 }
