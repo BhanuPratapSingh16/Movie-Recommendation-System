@@ -155,8 +155,8 @@ Dataset includes:
 ### Clone Repository
 
 ```bash
-git clone <repository-url>
-cd movie-recommendation-system
+git clone https://github.com/BhanuPratapSingh16/Movie-Recommendation-System.git
+cd "Movie Recommendation System"
 ```
 
 ### Start MongoDB
